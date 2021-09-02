@@ -1,0 +1,14 @@
+h1 {
+  color: red;
+  font-size: 48px;
+}
+
+#my-article {
+  background-color: black;
+  color: white;
+}
+
+.main-article {
+  background-color: #37474F;
+  color: #FFD966;
+}
