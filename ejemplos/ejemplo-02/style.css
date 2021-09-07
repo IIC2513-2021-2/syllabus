@@ -3,6 +3,10 @@ h1 {
   font-size: 48px;
 }
 
+h1 {
+  color: purple;
+}
+
 #my-article {
   background-color: black;
   color: white;
@@ -11,4 +15,124 @@ h1 {
 .main-article {
   background-color: #37474F;
   color: #FFD966;
+}
+
+/* Specificity: 0 0 1 1 */
+.secondary-article h3 {
+  font-style: italic;
+}
+
+/* Specificity: 0 0 2 3 */
+.header nav ul li:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+/* Specificity: 0 0 1 2 */
+.main-article p::first-line {
+  color: white;
+}
+
+.main-article p::first-letter {
+  font-size: 48px;
+}
+
+.secondary-article {
+  background-color: white;
+  color: black;
+}
+
+/* #my-article {
+  background-color: black;
+  color: white;
+} */
+
+article {
+  background-color: #37474F;
+  color: #FFD966;
+}
+
+/* Enhancements */
+
+html {
+  font-size: 18px;
+}
+
+body {
+  background-color: #37474F;
+  color: white;
+}
+
+h1 {
+  color: #FFD966;
+  font-size: 2rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+.header {
+  background-color: white;
+}
+
+.header .logo {
+  width: 100px;
+  text-align: center;
+}
+
+.header .logo a {
+  text-decoration: none;
+  color: #444;
+  font-size: 1.5rem;
+}
+
+.header .logo a:hover {
+  color: #CCC;
+}
+
+.header nav ul li {
+  color: #444;
+}
+
+/* .main-article {
+  background-color: #37474F;
+  color: #FFD966;
+} */
+
+/* #my-article {
+  background-color: black;
+  color: rgb(255, 255, 255);
+} */
+
+.main-container {
+
+}
+
+.secondary-container {
+
+}
+
+.secondary-container .secondary-article {
+  color: #444;
+}
+
+.date-small {
+  font-size: 0.8rem;
+}
+
+footer {
+  background-color: rgba(0, 0, 0, 0.5);
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+
+}
+
+/* Box model */
+
+.secondary-article {
+  padding: 50px;
+  padding-bottom: 0;
+  border: 4px solid #FFD966;
+  margin: 20px;
 }
