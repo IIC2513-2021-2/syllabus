@@ -42,11 +42,6 @@ h1 {
   color: black;
 }
 
-/* #my-article {
-  background-color: black;
-  color: white;
-} */
-
 article {
   background-color: #37474F;
   color: #FFD966;
@@ -95,24 +90,6 @@ h2 {
   color: #444;
 }
 
-/* .main-article {
-  background-color: #37474F;
-  color: #FFD966;
-} */
-
-/* #my-article {
-  background-color: black;
-  color: rgb(255, 255, 255);
-} */
-
-.main-container {
-
-}
-
-.secondary-container {
-
-}
-
 .secondary-container .secondary-article {
   color: #444;
 }
@@ -125,7 +102,29 @@ footer {
   background-color: rgba(0, 0, 0, 0.5);
   font-size: 0.9rem;
   color: rgba(255, 255, 255, 0.8);
+}
 
+/* Display */
+
+.secondary-container .secondary-article {
+  width: 50%;
+  height: 200px;
+}
+
+.main-container .main-article span {
+  background-color: white;
+  color: #444;
+  width: 200px;
+  height: 100px;
+}
+
+header ul li {
+  display: inline-block;
+  width: 25%;
+  height: 50px;
+  text-align: center;
+  /* https://acncuc.medium.com/a-simple-css-horizontal-navigation-bar-using-inline-block-c507c581db69 */
+  margin-right: -4px;
 }
 
 /* Box model */
@@ -135,4 +134,48 @@ footer {
   padding-bottom: 0;
   border: 4px solid #FFD966;
   margin: 20px;
+  box-sizing: border-box;
+}
+
+.main-container .main-article span {
+  padding: 100px;
+  margin: 30px;
+  display: inline-block;
+}
+
+/* Final adjustments */
+
+.header ul li {
+  height: auto;
+  padding: 15px 0;
+}
+
+.main-article {
+  border: 1px solid white;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 30px 0;
+}
+
+.secondary-article {
+  margin: 20px auto;
+}
+
+.header, .main-container, .secondary-container {
+  padding: 0 10%;
+}
+
+footer {
+  padding: 20px 10%;
+}
+
+footer p {
+  margin-bottom: 20px;
+}
+
+/* Reset elements */
+
+body, ul, p {
+  margin: 0;
+  padding: 0;
 }
