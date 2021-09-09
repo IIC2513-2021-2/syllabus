@@ -37,9 +37,15 @@
 
 ### Ayudantes
 
-| Nombre           | Github                                                 | Email              |
-| :--------------- | :----------------------------------------------------- | :----------------- |
-| Diego Solari     | [@dasolari](https://github.com/dasolari)               | dasolari@uc.cl     |
+| Nombre              | Github                                               | Email                |
+| :------------------ | :--------------------------------------------------- | :------------------- |
+| Fernando Arriagada  | [@Fenho](https://github.com/Fenho)                   | foarriagada@uc.cl    |
+| José Antonio Castro | [@Baelfire18](https://github.com/Baelfire18)         | jacastro18@uc.cl     |
+| Matías Duhalde      | [@MatiasDuhalde](https://github.com/MatiasDuhalde)   | matias.duhalde@uc.cl |
+| José Madriaza       | [@LeoMo-27](https://github.com/LeoMo-27)             | jm.madriaza@uc.cl    |
+| Francisca Otero     | [@FranciscaOtero](https://github.com/FranciscaOtero) | mfotero@uc.cl        |
+| Diego Solari        | [@dasolari](https://github.com/dasolari)             | dasolari@uc.cl       |
+| Tomás Soto          | [@Crespy98](https://github.com/Crespy98)             | tasoto@uc.cl         |
 
 # Foro
 
