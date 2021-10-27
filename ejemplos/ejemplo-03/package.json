@@ -1,0 +1,15 @@
+{
+  "name": "ejemplo-03",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Sebastián Vicencio",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "koa": "^2.13.3",
+    "koa-body": "^4.2.0",
+    "koa-router": "^10.1.1"
+  }
+}
