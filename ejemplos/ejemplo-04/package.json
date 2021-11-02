@@ -1,0 +1,14 @@
+{
+  "name": "ejemplo-04",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Sebastián Vicencio",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js",
+    "test": "jest --verbose"
+  },
+  "devDependencies": {
+    "jest": "^27.3.1"
+  }
+}
