@@ -75,7 +75,11 @@ A continuación encontrará dos wireframes de posibles landing pages. Usted debe
 
 ## Wireframe 1
 
+![wireframe-1-interrogacion](https://user-images.githubusercontent.com/421739/143433546-0e5a7fa1-fcbc-42ea-9b19-261beb2f4b8e.jpg)
+
 ## Wireframe 2
+
+![wireframe-2-interrogacion](https://user-images.githubusercontent.com/421739/143433574-6b230a16-e714-4060-8e1c-7320b23f7114.jpg)
 
 ## Consideraciones para ambas opciones
 
