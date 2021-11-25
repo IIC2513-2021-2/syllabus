@@ -104,7 +104,7 @@ Debe implementar un endpoint que permita listar los candidatos presidenciales. L
     - Status code: `200`
     - Content-Type: `application/json`
 
-El cuerpo del response no está especificado intencionalmente en este documento, ya que usted debe deducirlo a partir de una implementación existente en la aplicación. Esto se detalle a continuación.
+El cuerpo del response no está especificado intencionalmente en este documento, ya que usted debe deducirlo a partir de una implementación existente en la aplicación. Esto se detalla a continuación.
 
 Si usted ingresa a la ruta `/candidates` en el browser podrá ver una vista que muestra inicialmente que no hay información disponible para candidatos. Sin embargo, al revisar el detalle de la vista EJS asociada, no encontrará lo mismo que se visualiza en el browser, sino que sólo verá un elemento HTML vacío con id `root`. El resto está implementado mediante una pequeña aplicación frontend montada sobre este elemento del DOM, cuya implementación se encuentra dentro de `src/assets/js/app.jsx`.
 
@@ -133,7 +133,7 @@ Para el cuerpo del response, tendrá que elegir entre dos alternativas, que pres
     "candidateLastName": "Last name of candidate",
     "createdAt": "November 25th, 2021"
   },
-{
+  {
     "topic2": "content",
     "candidateLastName": "Last name of candidate",
     "createdAt": "November 25th, 2021"
@@ -258,7 +258,7 @@ El resultado final debe permitir ejecutar ESLint sin que arroje errores.
 # Consideraciones generales
 
 - El proyecto cuenta con todos los packages necesarios para desarrollar la Interrogación. De todas formas, si considera que algún package le ayudará, puede incluir un archivo README dentro de la carpeta src indicando cualquier package extra utilizado, y cualquier instrucción que el ayudante requiera conocer para ejecutar su solución
-- En general, el enunciado es bastante claro en cuanto a qué archivos usted debe modificar. Sin embargo, usted es libre de hacer modificaciones a otros archivos o agregar nuevos si lo estima conveniente, siempre que estén dentro de la carpeta “src” en cada proyecto, exceptuando los relacionados a los siguientes 2 puntos
+- En general, el enunciado es bastante claro en cuanto a qué archivos usted debe modificar. Sin embargo, usted es libre de hacer modificaciones a otros archivos o agregar nuevos si lo estima conveniente, siempre que estén dentro de la carpeta “src” del proyecto, exceptuando los relacionados a los siguientes 2 puntos
 - Usted no debe modificar el código JavaScript client-side. Sólo lo necesita utilizar para identificar algunas especificaciones de los endpoints de la API, y para testear que su implementación está correcta. Si lo modifica para ajustar su implementación de la API, este último ítem no será válido
 - Usted no debe modificar los modelos de la aplicación. Si lo hace, las implementaciones que hagan uso de sus cambios no serán válidas
 - Para agregar estilos, puede utilizar el archivo en la ruta `src/assets/styles/app.scss`
@@ -287,6 +287,6 @@ Según lo especificado en el programa del curso, **el primer día de atraso desc
 ## Consultas
 
 1. Se responderán consultas (dudas estrictamente de enunciado) en la primera hora del módulo de clases (de 10:00 hrs - 11:00 hrs), en la misma sesión Zoom de las cátedras. De este modo, usted alcanza a leer el enunciado antes y llegar a plantear dudas. De todas maneras, se publicará un resumen de las dudas [en una issue del repositorio **`syllabus`**](https://github.com/IIC2513-2021-2/syllabus/issues).
-2. **No habrá preguntas por medio de issues**, por lo que se sugiere encarecidamente asistir a la sesión por Zoom y/o revisar el video issue asociado.
+2. **No habrá preguntas por medio de issues**, por lo que se sugiere encarecidamente asistir a la sesión por Zoom y/o revisar el video asociado.
 
 ¡Éxito!
