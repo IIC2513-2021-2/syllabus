@@ -1,3 +1,6 @@
+# Interrogación IIC2513 2021-2
+> **Fecha de Entrega**: jueves 25 de noviembre de 2021 a las 22:00 horas.
+
 # Contexto
 
 El pasado domingo 21 de noviembre se realizaron las elecciones presidenciales, parlamentarias y de CORE en el país. Este proceso electoral fue particularmente importante dados los recientes acontecimientos ocurridos en el país, tales como el estallido social de 2019, la pandemia del COVID-19 y el proceso constituyente que comenzó en julio de 2021. El clima político ha estado bastante agitado y las elecciones presidenciales, en particular, han tomado el protagonismo de la agenda nacional en los últimos meses.
@@ -257,5 +260,29 @@ El resultado final debe permitir ejecutar ESLint sin que arroje errores.
 - Para agregar estilos, puede utilizar el archivo en la ruta `src/assets/styles/app.scss`
 - No se evaluará lo que no sea posible probar, por lo tanto, asegúrese de que su
 aplicación corra sin problemas (puede instalarla "desde cero" para asegurarse)
+
+# Aspectos administrativos
+
+## Forma de entrega
+
+Para entregar la solución de su Interrogación, debe subir **un solo archivo .zip** al formulario que se publicará en un anuncio. Este archivo debe contener sólo lo siguiente: carpeta `src` del repositorio clonado y que contenga la implementación de todas las respuestas.
+
+El nombre del archivo .zip debe seguir el siguiente formato:
+```
+apellidoPaterno_Nombre_numeroAlumno.zip
+```
+
+Por ejemplo, el alumno Benjamín Moisés Retamal Palacios entregará un archivo llamado: `Retamal_Benjamin_13191510.zip`
+
+Asegúrese de que el archivo .zip contiene todos los archivos de la interrogación. Para esto se le sugiere descomprimirlo y revisar el contenido antes de enviarlo en el formulario. Lo que se reciba es lo que se corregirá, **sin excepciones**.
+
+## Política de atrasos
+
+Según lo especificado en el programa del curso, **el primer día de atraso descontará un 25% del puntaje total obtenido**. Un día de retraso comienza al segundo siguiente del plazo establecido (como el plazo es a las 22:00:00, entonces entregar a las 22:00:01 ya se considera un día de atraso). **Al segundo día de atraso, se califica la evaluación con nota 1.0**.
+
+## Consultas
+
+1. Se responderán consultas (dudas estrictamente de enunciado) en la primera hora del módulo de clases (de 10:00 hrs - 11:00 hrs), en la misma sesión Zoom de las cátedras. De este modo, usted alcanza a leer el enunciado antes y llegar a plantear dudas. De todas maneras, se publicará un resumen de las dudas [en una issue del repositorio **`syllabus`**](https://github.com/IIC2513-2021-2/syllabus/issues).
+2. **No habrá preguntas por medio de issues**, por lo que se sugiere encarecidamente asistir a la sesión por Zoom y/o revisar el video issue asociado.
 
 ¡Éxito!
