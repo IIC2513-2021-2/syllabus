@@ -15,15 +15,96 @@
     <!-- <script src="app.js"></script> -->
     <script type="text/babel">
       const rootNode = document.getElementById('root');
+      const title = 'Un título';
+      const INITIAL_STATE = [
+        {
+          id: 1,
+          title: 'Poner atención en clases',
+          completed: false,
+        },
+        {
+          id: 2,
+          title: 'Escribir un script JS en cliente',
+          completed: false,
+        },
+        {
+          id: 3,
+          title: 'Terminar Entrega 3',
+          completed: true,
+        },
+        {
+          id: 4,
+          title: 'Prepararme para la Interrogación',
+          completed: true,
+        },
+      ];
 
       function MyComponent() {
         return (
-          <h1>Un título</h1>
+          <h1>{title}</h1>
         );
       }
 
-      // const element = <h1>Un título</h1>;
-      ReactDOM.render(<MyComponent />, rootNode);
+      function TodoInput() {
+        return (
+          <input
+            type="text"
+            className="add-todo"
+            placeholder="Agregar todo y presionar Enter"
+          />
+        );
+      }
+
+      function TodoItem(props) {
+        const { todo } = props;
+        return (
+          <li className={`todo-item${todo.completed ? ' completed' : ''}`}>
+            <input type="checkbox" checked={todo.completed} />
+            <span>{todo.title}</span>
+            <button>🗑</button>
+          </li>
+        );
+      }
+
+      function TodoList() {
+        const [todos, setTodos] = React.useState(INITIAL_STATE);
+
+        const removeLastTodoItem = () => {
+          const newTodos = todos.slice(0, todos.length - 1);
+          setTodos(newTodos);
+        };
+
+        // Call removeLastTodoItem every second
+        React.useEffect(() => {
+          let timeoutId;
+          if (todos.length) {
+            timeoutId = setTimeout(() => {
+              removeLastTodoItem();
+            }, 1000);
+          }
+          return () => clearTimeout(timeoutId);
+        });
+
+        return (
+          <main className="centered">
+            <div className="container">
+              <header>
+                <h1 id="title">Todo list</h1>
+                <TodoInput />
+              </header>
+              <section className="todo-list">
+                <ul>
+                  {todos.map((todo) => (
+                    <TodoItem key={todo.id} todo={todo} />
+                  ))}
+                </ul>
+              </section>
+            </div>
+          </main>
+        );
+      }
+
+      ReactDOM.render(<TodoList />, rootNode);
     </script>
   </body>
 </html>
