@@ -57,6 +57,7 @@
 
       function TodoItem(props) {
         const { todo } = props;
+        // console.log(todo);
         return (
           <li className={`todo-item${todo.completed ? ' completed' : ''}`}>
             <input type="checkbox" checked={todo.completed} />
@@ -74,16 +75,37 @@
           setTodos(newTodos);
         };
 
+        const toggleLastTodoItem = () => {
+          const newTodos = [...todos];
+          const lastTodo = newTodos[todos.length - 1]
+          lastTodo.completed = !lastTodo.completed;
+          setTodos(newTodos);
+        };
+
         // Call removeLastTodoItem every second
-        React.useEffect(() => {
-          let timeoutId;
-          if (todos.length) {
-            timeoutId = setTimeout(() => {
-              removeLastTodoItem();
-            }, 1000);
-          }
-          return () => clearTimeout(timeoutId);
-        });
+        // React.useEffect(() => {
+        //   let timeoutId;
+        //   if (todos.length) {
+        //     timeoutId = setTimeout(() => {
+        //       removeLastTodoItem();
+        //     }, 1000);
+        //   }
+        //   return () => clearTimeout(timeoutId);
+        // });
+
+        // Call toggleLastTodoItem after 1 second
+        // React.useEffect(() => {
+        //   let timeoutId;
+        //   if (todos.length) {
+        //     timeoutId = setTimeout(() => {
+        //       toggleLastTodoItem();
+        //     }, 2000);
+        //   }
+        //   return () => clearTimeout(timeoutId);
+        // }, []);
+
+
+        // console.log(todos);
 
         return (
           <main className="centered">
