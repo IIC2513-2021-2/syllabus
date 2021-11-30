@@ -28,7 +28,6 @@ const INITIAL_DATA = [
 export default function TodoList() {
   const [todos, setTodos] = useState(INITIAL_DATA);
 
-  // eslint-disable-next-line no-unused-vars
   const removeLastTodoItem = () => {
     setTodos(todos.slice(0, todos.length - 1));
   };
@@ -41,6 +40,23 @@ export default function TodoList() {
     setTodos(newTodos);
   };
 
+  const handleRemoveTodoItem = (id) => {
+    const newTodos = todos.filter((todo) => todo.id !== id);
+    setTodos(newTodos);
+  };
+
+  const handleToggleTodoItem = (id) => {
+    const newTodos = todos.map((todo) => {
+      if (todo.id !== id) return todo;
+
+      return {
+        ...todo,
+        completed: !todo.completed,
+      };
+    });
+    setTodos(newTodos);
+  };
+
   return (
     <div className="container">
       <header>
@@ -48,11 +64,14 @@ export default function TodoList() {
         <TodoInput />
       </header>
       <section className="todo-list">
+        <button onClick={removeLastTodoItem}>Eliminar último todo</button>
         <ul>
           {todos.map((todo) => (
             <TodoItem
               key={todo.id}
               todo={todo}
+              onRemove={() => handleRemoveTodoItem(todo.id)}
+              onToggle={() => handleToggleTodoItem(todo.id)}
             />
           ))}
         </ul>
