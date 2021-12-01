@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { /* useEffect, */useState } from 'react';
 import TodoInput from './TodoInput';
 import TodoItem from './TodoItem';
 
@@ -28,22 +28,22 @@ const INITIAL_DATA = [
 export default function TodoList() {
   const [todos, setTodos] = useState(INITIAL_DATA);
 
-  useEffect(() => {
-    console.log('%cTodoList: effect after every render', 'color: cornflowerblue');
-    return () => console.log('%cTodoList: effect CLEANUP after every render but before new effect', 'color: cornflowerblue');
-  });
+  // useEffect(() => {
+  //   console.log('%cTodoList: effect after every render', 'color: cornflowerblue');
+  //   return () => console.log('%cTodoList: effect CLEANUP after every render but before new effect', 'color: cornflowerblue');
+  // });
 
-  useEffect(() => {
-    console.log('%cTodoList: effect after mounting', 'color: lightsalmon');
-    return () => console.log('%cTodoList: effect CLEANUP when unmounting', 'color: lightsalmon');
-  }, []);
+  // useEffect(() => {
+  //   console.log('%cTodoList: effect after mounting', 'color: lightsalmon');
+  //   return () => console.log('%cTodoList: effect CLEANUP when unmounting', 'color: lightsalmon');
+  // }, []);
 
-  useEffect(() => {
-    console.log('%cTodoList: effect after todos state is updated', 'color: darkseagreen');
-    return () => console.log('%cTodoList: effect CLEANUP after todos state is updated', 'color: darkseagreen');
-  }, [todos]);
+  // useEffect(() => {
+  //   console.log('%cTodoList: effect after todos state is updated', 'color: darkseagreen');
+  //   return () => console.log('%cTodoList: effect CLEANUP after todos state is updated', 'color: darkseagreen');
+  // }, [todos]);
 
-  console.log('%cTodoList: render', 'color: orchid');
+  // console.log('%cTodoList: render', 'color: orchid');
 
   const removeLastTodoItem = () => {
     setTodos(todos.slice(0, todos.length - 1));
