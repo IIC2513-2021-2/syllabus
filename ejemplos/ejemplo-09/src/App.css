@@ -12,6 +12,11 @@ body {
   margin: 40px auto;
 }
 
+.dark {
+  background-color: #2d333b;
+  color: #adbac7;
+}
+
 .container {
   display: flex;
   flex-direction: column;
