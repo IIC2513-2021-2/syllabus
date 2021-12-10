@@ -1,8 +1,6 @@
-# Actividad 06: Async JavaScript
+# Solución Actividad 06: Async JavaScript
 
-> [Código en RunKit](https://runkit.com/sivicencio/5f55be47d8739e001ab7c30f)
-
-**Solución**: [haz click aquí](solution.md)
+> [Código en RunKit](https://runkit.com/sivicencio/61b3b852f5f32f000964484f)
 
 ## Callbacks
 
@@ -38,6 +36,17 @@ function getCourseInfoWithCallback(id) {
   const courseInfo = {};
 
   // Write your solution here
+  courseInfo.id = id;
+  getCourseNameWithCallback(id, (name) => {
+    courseInfo.name = name;
+    getCourseTeacherWithCallback(id, (teacher) => {
+      courseInfo.teacher = teacher;
+      getCourseStudentsWithCallback(id, (students) => {
+        courseInfo.students = students;
+        console.log(courseInfo);
+      });
+    });
+  });
 }
 ```
 
@@ -45,15 +54,15 @@ Puedes probar tu función con la siguiente línea de código. Intenta cambiar la
 
 ```javascript
 // Descomenta la siguiente línea
-// getCourseInfoWithCallback('IIC2513');
+getCourseInfoWithCallback('IIC2513');
 ```
 
 Ahora que tu función ya está implementada, descomenta las siguientes líneas y ve qué sucede:
 
 ```javascript
-// console.log('First');
-// getCourseInfoWithCallback('IIC2413');
-// console.log('Last');
+console.log('First');
+getCourseInfoWithCallback('IIC2413');
+console.log('Last');
 ```
 
 ¿Por qué vemos en consola el output en un determinado orden? ¿Recuerdas el *event loop* que vimos en clases? Si no entiendes por qué sucede, es recomendable que revises lo visto en clases e investigues más por tu cuenta si es necesario. Es gracias al *event loop* que es posible ejecutar código de forma asíncrona en JavaScript, y es algo que estaremos utilizando extensamente durante el curso.
@@ -80,18 +89,32 @@ function getCourseInfoWithPromise(id) {
   const courseInfo = {};
 
   // Write your solution here
+  courseInfo.id = id;
+  getCourseNameWithPromise(id)
+    .then((name) => {
+      courseInfo.name = name;
+      return getCourseTeacherWithPromise(id);
+    })
+    .then((teacher) => {
+      courseInfo.teacher = teacher;
+      return getCourseStudentsWithPromise(id);
+    })
+    .then((students) => {
+      courseInfo.students = students;
+      console.log(courseInfo);
+    });
 }
 
 // Descomenta la siguiente línea para probar tu solución
-// getCourseInfoWithPromise('IIC2513');
+getCourseInfoWithPromise('IIC2513');
 ```
 
 Nuevamente, ahora que tu función ya está implementada, descomenta las siguientes líneas y ve qué sucede:
 
 ```javascript
-// console.log('First');
-// getCourseInfoWithPromise('IIC2413');
-// console.log('Last');
+console.log('First');
+getCourseInfoWithPromise('IIC2413');
+console.log('Last');
 ```
 
 Las promesas son código asíncrono como cualquier otro. Por lo tanto, el *event loop* entra en acción de la misma forma.
@@ -109,10 +132,25 @@ function getCourseInfoWithPromiseError(id) {
   const courseInfo = {};
 
   // Write your solution here
+  courseInfo.id = id;
+  getCourseNameWithPromise(id)
+    .then((name) => {
+      courseInfo.name = name;
+      return getCourseTeacherWithPromise(id);
+    })
+    .then((teacher) => {
+      courseInfo.teacher = teacher;
+      return getCourseStudentsWithPromise(id);
+    })
+    .then((students) => {
+      courseInfo.students = students;
+      console.log(courseInfo);
+    })
+    .catch(console.log);
 }
 
 // Descomenta la siguiente línea para probar tu solución
-// getCourseInfoWithPromiseError('ICS3213');
+getCourseInfoWithPromiseError('ICS3213');
 ```
 
 ### Manejando múltiples promesas juntas e independientes entre sí
@@ -126,10 +164,23 @@ function getCourseInfoWithPromiseAll(id) {
   const courseInfo = {};
 
   // Write your solution here
+  courseInfo.id = id;
+  const coursePromises = [
+    getCourseNameWithPromise(id),
+    getCourseTeacherWithPromise(id),
+    getCourseStudentsWithPromise(id),
+  ];
+  Promise.all(coursePromises)
+   .then(([name, teacher, students]) => {
+     courseInfo.name = name;
+     courseInfo.teacher = teacher;
+     courseInfo.students = students;
+     console.log(courseInfo);
+   });
 }
 
 // Descomenta la siguiente línea para probar tu solución
-// getCourseInfoWithPromiseAll('IIC2143');
+getCourseInfoWithPromiseAll('IIC2143');
 ```
 
 
@@ -158,6 +209,16 @@ async function getCourseInfoAsync(id) {
   const courseInfo = {};
 
   // Write your solution here
+  courseInfo.id = id;
+  const coursePromises = [
+    getCourseNameWithPromise(id),
+    getCourseTeacherWithPromise(id),
+    getCourseStudentsWithPromise(id),
+  ];
+  const [name, teacher, students] = await Promise.all(coursePromises);
+  courseInfo.name = name;
+  courseInfo.teacher = teacher;
+  courseInfo.students = students;
 
   // The object is returned at the end
   return courseInfo;
@@ -174,6 +235,22 @@ async function getCourseInfoAsyncWithError(id) {
   const courseInfo = {};
 
   // Write your solution here
+  courseInfo.id = id;
+  const coursePromises = [
+    getCourseNameWithPromise(id),
+    getCourseTeacherWithPromise(id),
+    getCourseStudentsWithPromise(id),
+  ];
+  try {
+    const [name, teacher, students] = await Promise.all(coursePromises);
+    courseInfo.name = name;
+    courseInfo.teacher = teacher;
+    courseInfo.students = students;
+  } catch (error) {
+    console.log(`Async error: ${error}`);
+  }
+  
+  return courseInfo;
 }
 getCourseInfoAsyncWithError('ICS3213');
 ```
