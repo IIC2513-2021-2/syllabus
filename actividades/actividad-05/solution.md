@@ -1,8 +1,6 @@
-# Actividad 05: Finders
+# Solución Actividad 05: Finders
 
-> [Código en RunKit](https://runkit.com/sivicencio/5f5563dbeced61001abcb4d7)
-
-**Solución**: [haz click aquí](solution.md)
+> [Código en RunKit](https://runkit.com/sivicencio/61b3b57a4335db0008f07d88)
 
 Para esta actividad utilizaremos el mismo array de usuarios de la actividad anterior, esta vez para crear funcionalidad interesante asociada a objetos. Partiremos definiéndolo:
 
@@ -258,6 +256,14 @@ Imaginemos que tenemos información de otra fuente de datos que nos entrega sól
 ```javascript
 function findUserById(users, id) {
   // Write your solution here
+  let userObj;
+  users.forEach((user) => {
+    if (user.id === id) {
+      userObj = user;
+      return;
+    }
+  });
+  return userObj;
 }
 ```
 
@@ -280,6 +286,10 @@ function findUserByIdUsingKey(users, id) {
   let usersObj = {}
 
   // Write your solution here
+  usersObj = users.reduce((accObj, user) => ({
+    ...accObj,
+    [user.id]: user,
+  }), {});
   
   // This is the expected return. Try not to modify it
   return usersObj[id];
@@ -299,6 +309,11 @@ Recuerda que dentro de la función que debes retornar puedes utilizar variables 
 ```javascript
 function findByField(users, field) {
   // Write your solution here
+  const usersByField = users.reduce((accObj, user) => ({
+    ...accObj,
+    [user[field]]: user,
+  }), {});
+  return (value) => usersByField[value];
 }
 ```
 
