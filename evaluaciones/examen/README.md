@@ -300,6 +300,9 @@ Actualmente la vista para visualizar las expediciones (en la ruta `/expeditions`
 
 A continuación podrá encontrar wireframes con el flujo recién descrito.
 
+![Wireframes Examen-CompaniesList](https://user-images.githubusercontent.com/421739/146000220-b6afad46-716c-49e2-a8cc-64f8c03ec536.jpg)
+
+![Wireframes Examen-CompaniesList (1)](https://user-images.githubusercontent.com/421739/146000233-43e9b64c-c5a7-4800-be70-20f91a1387fd.jpg)
 
 
 ## Miembros de una expedición
@@ -315,6 +318,9 @@ Su tarea será implementar cambios en el componente `<ExpeditionDetail />` ****d
 
 A continuación podrá encontrar wireframes con el flujo recién descrito.
 
+![Wireframes Examen-CompanyDetail](https://user-images.githubusercontent.com/421739/146000296-92a6e522-72ef-41f8-9578-d1e3ac798a6c.jpg)
+
+![Wireframes Examen-CompanyDetail (1)](https://user-images.githubusercontent.com/421739/146000317-97671fda-f794-4be0-ad59-34a077a517db.jpg)
 
 
 ## Formulario de acción sobre datos
@@ -341,6 +347,7 @@ Actualmente la vista de edición de una expedición (en la ruta `/expeditions/:i
 
 A continuación podrá encontrar wireframes con el flujo recién descrito.
 
+![Wireframes Examen-CompanyDetail (2)](https://user-images.githubusercontent.com/421739/146000350-e9807a69-d129-4ee8-a339-9652ed90a14a.jpg)
 
 
 ### Agregar miembro a expedición
@@ -357,6 +364,7 @@ Actualmente la vista para agregar un miembro a una expedición (en la ruta `/exp
 
 A continuación podrá encontrar wireframes con el flujo recién descrito.
 
+![Wireframes Examen-CompanyDetail (3)](https://user-images.githubusercontent.com/421739/146000392-1ed6f784-df7e-4cc5-bc33-0716a180de6f.jpg)
 
 
 # Parte IV: Seguridad web [0.5 pt]
