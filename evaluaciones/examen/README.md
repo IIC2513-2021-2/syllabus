@@ -291,7 +291,7 @@ Cabe destacar que los cambios y funcionalidades que usted debe implementar son *
 
 ## Vista lista de expediciones
 
-Actualmente la vista para visualizar las expediciones (en la ruta `/expeditions` implementada en el componente `<Expeditions />`) se encuentra con título referencial y un ícono de loading. Su tarea será implementar cambios en el componente `<Expeditions />` ****de forma que el flujo sea el siguiente:
+Actualmente la vista para visualizar las expediciones (en la ruta `/expeditions` implementada en el componente `<Expeditions />`) se encuentra con título referencial y un ícono de loading. Su tarea será implementar cambios en el componente `<Expeditions />` de forma que el flujo sea el siguiente:
 
 1. Al ingresar a la ruta `/expeditions` debe mostrarse el título “ISS recent expeditions” y un ícono de loading grande.
 2. La vista debe comenzar cargando la información correspondiente al endpoint “Lista de expediciones”
@@ -310,7 +310,7 @@ A continuación podrá encontrar wireframes con el flujo recién descrito.
 
 Actualmente la vista de detalle de una expedición (en la ruta `/expeditions/:id` implementada en el componente `<ExpeditionDetail />`) se encuentra parcialmente implementada y es funcional: muestra todos los datos de la expedición. Sin embargo, en la parte inferior, asociada a la sección de miembros de una expedición, se encontrará con un loading "infinito".
 
-Su tarea será implementar cambios en el componente `<ExpeditionDetail />` ****de forma que el flujo sea el siguiente:
+Su tarea será implementar cambios en el componente `<ExpeditionDetail />` de forma que el flujo sea el siguiente:
 
 1. Al ingresar a la ruta `/expeditions/:id`, se muestre un ícono de loading grande mientras se cargan los datos de la expedición, y una vez que estos se encuentren disponibles, se despliegan incluyendo un ícono de loading en la parte inferior. **Esto ya sucede y no requiere intervención suya**.
 2. En este punto la vista debe cargar la información correspondiente al endpoint "Lista de miembros de una expedición"
@@ -337,7 +337,7 @@ En este punto usted debe implementar un formulario asociado a la decisión de im
 
 Actualmente la vista de edición de una expedición (en la ruta `/expeditions/:id/edit` implementada en el componente `<EditExpedition />`) se encuentra con un título referencial y una implementación estática de un formulario. Su tarea será implementar el formulario y la lógica de submit según las siguientes indicaciones:
 
-- El formulario debe incluir los campos `name`, `startDate`, `endDate`, `patch` y `description`, con su tipo correspondiente (puede deducirlo a partir de tipo de dato en el backend)
+- El formulario debe incluir los campos `name`, `startDate`, `endDate`, `patch` y `description`, con su tipo correspondiente (puede deducirlo a partir del tipo de dato en el backend)
 - En la carga inicial de la vista, se debe consumir el endpoint "Detalle de una expedición" y pre-llenar los campos del formulario con la respuesta. Opcionalmente, mientras carga los datos puede mostrar un ícono de loading
 - No debe incluir validación client-side. En este evaluación sólo bastará con la validación server-side que ya debió haber implementado
 - Al hacer submit del formulario, debe mostrar el botón de submit con un mensaje o ícono de loading pequeño, y deshabilitarlo
@@ -346,7 +346,7 @@ Actualmente la vista de edición de una expedición (en la ruta `/expeditions/:i
 - Si la operación es exitosa, debe redireccionar a la vista de detalle de la expedición
 - Puede utilizar manejo nativo de formulario, o bien, el package `formik` que ya se encuentra instalado en el proyecto
 
-A continuación podrá encontrar wireframes con el flujo recién descrito.
+A continuación podrá encontrar un wireframe con parte del flujo recién descrito.
 
 ![Wireframes Examen-CompanyDetail (2)](https://user-images.githubusercontent.com/421739/146000350-e9807a69-d129-4ee8-a339-9652ed90a14a.jpg)
 
@@ -355,7 +355,7 @@ A continuación podrá encontrar wireframes con el flujo recién descrito.
 
 Actualmente la vista para agregar un miembro a una expedición (en la ruta `/expeditions/:id/members/new` implementada en el componente `<NewMember />`) se encuentra con un título referencial y una implementación estática de un formulario. Su tarea será implementar el formulario y la lógica de submit según las siguientes indicaciones:
 
-- El formulario debe incluir los campos `name`, `agency`, `nationality`, `bio`, `photo` y`role`, con su tipo correspondiente (puede deducirlo a partir de tipo de dato en el backend)
+- El formulario debe incluir los campos `name`, `agency`, `nationality`, `bio`, `photo` y`role`, con su tipo correspondiente (puede deducirlo a partir del tipo de dato en el backend)
 - No debe incluir validación client-side. En este evaluación sólo bastará con la validación server-side que ya debió haber implementado
 - Al hacer submit del formulario, debe mostrar el botón de submit con un mensaje o ícono de loading pequeño, y deshabilitarlo
 - Al hacer submit del formulario, se debe consumir el endpoint "Agregar miembro a expedición", adjuntando los datos del formulario
@@ -363,7 +363,7 @@ Actualmente la vista para agregar un miembro a una expedición (en la ruta `/exp
 - Si la operación es exitosa, debe redireccionar a la vista de detalle de la expedición
 - Puede utilizar manejo nativo de formulario, o bien, el package `formik` que ya se encuentra instalado en el proyecto
 
-A continuación podrá encontrar wireframes con el flujo recién descrito.
+A continuación podrá encontrar un wireframe con parte del flujo recién descrito.
 
 ![Wireframes Examen-CompanyDetail (3)](https://user-images.githubusercontent.com/421739/146000392-1ed6f784-df7e-4cc5-bc33-0716a180de6f.jpg)
 
@@ -433,7 +433,7 @@ Según lo especificado en el programa del curso, **el primer día de atraso desc
 
 ## Consultas
 
-1. Se responderán consultas y dudas estrictamente de enunciado de 10:30 a 11:30 hrs, en [esta sesión Zoom](https://zoom.us/j/95904044450?pwd=cm5UM2VwVWNrejhkeDRURjEvNUgvdz09), la cual será grabada y subida para que la tenga a disposición durante el día. De este modo, usted alcanza a leer el enunciado antes y llegar a plantear dudas. De todas maneras, se publicará un resumen de las dudas [en una issue del repositorio `**syllabus**`](https://github.com/IIC2513-2021-2/syllabus/issues).
+1. Se responderán consultas y dudas estrictamente de enunciado de 10:30 a 11:30 hrs, en [esta sesión Zoom](https://zoom.us/j/95904044450?pwd=cm5UM2VwVWNrejhkeDRURjEvNUgvdz09), la cual será grabada y subida para que la tenga a disposición durante el día. De este modo, usted alcanza a leer el enunciado antes y llegar a plantear dudas. De todas maneras, se publicará un resumen de las dudas [en una issue del repositorio **`syllabus`**](https://github.com/IIC2513-2021-2/syllabus/issues).
 2. **No habrá preguntas por medio de issues**, por lo que se sugiere encarecidamente asistir a la sesión por Zoom y/o revisar el video asociado.
 
 ¡Éxito! 🙌🏼
