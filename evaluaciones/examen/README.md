@@ -118,6 +118,7 @@ Esta primera parte es la única que no tiene relación con el contexto de la apl
 7. Las vulnerabilidad de tipo XSS son de las más comunes en la Web. ¿Por qué un ataque XSS persistente puede llegar a afectar a más personas que uno reflejado?
 8. ¿Cuál es la función de un certificado TLS?
 9. ¿Cuál es el propósito de un request preflight, en el contexto de CORS?
+10. Una persona promedio en su día a día, ¿accede la Web sólo desde un browser? Fundamente su respuesta.
 
 ## Implementación
 
