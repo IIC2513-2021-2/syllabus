@@ -143,8 +143,8 @@ Debe implementar un endpoint que permita acceder al detalle de una expedición (
 
 La especificación del endpoint es la siguiente:
 
-- Method: `**GET**`
-- Path: `**/api/expeditions/:id**`
+- Method: **`GET`**
+- Path: **`/api/expeditions/:id`**
 - Response
     - Status code: `200`
     - Content-Type: `application/json`
@@ -156,8 +156,8 @@ Debe implementar un endpoint que permita obtener la lista de todos los miembros 
 
 La especificación del endpoint es la siguiente:
 
-- Method: `**GET**`
-- Path: `**/api/expeditions/:id/members**`
+- Method: **`GET`**
+- Path: **`/api/expeditions/:id/members`**
 - Response
     - Status code: `200`
     - Content-Type: `application/json`
