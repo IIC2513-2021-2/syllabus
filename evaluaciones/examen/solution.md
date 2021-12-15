@@ -271,7 +271,7 @@ router.get('api.expeditions.members', '/:id/members', async (ctx) => {
 
 ### Pauta de evaluación
 
-- **[0.10 pts]** Definición de nuevo endpoint con método HTTP `GET` y path `/api/expeditions/:id:/members`
+- **[0.10 pts]** Definición de nuevo endpoint con método HTTP `GET` y path `/api/expeditions/:id/members`
 - **[0.10 pts]** Consulta dentro del endpoint para obtener la expedición dada por el parámetro `id`
 - **[0.10 pts]** Consulta dentro del endpoint para obtener el listado de miembros de una expedición específica
 - **[0.08 pts]** Construcción del body a partir de un objeto `JSONAPISerializer` para seguir formato JSON API
@@ -329,6 +329,13 @@ const PERMITTED_EXPEDITION_FIELDS = [
   'patch',
   'description',
 ];
+
+router.param('id', async (id, ctx, next) => {
+  const expedition = await ctx.orm.expedition.findByPk(id);
+  if (!expedition) ctx.throw(404, "The expedition you are looking for doesn't exist");
+  ctx.state.expedition = expedition;
+  await next();
+});
 
 router.patch('api.expeditions.update', '/:id', async (ctx) => {
   const { expedition } = ctx.state;
@@ -453,7 +460,106 @@ La especificación del endpoint es la siguiente:
 
 ### Solución
 
+```javascript
+/* src/routes/api/expeditions.js */
+
+const PERMITTED_MEMBER_FIELDS = [
+  'name',
+  'agency',
+  'nationality',
+  'bio',
+  'photo',
+  'role',
+  'expeditionId',
+];
+
+router.param('id', async (id, ctx, next) => {
+  const expedition = await ctx.orm.expedition.findByPk(id);
+  if (!expedition) ctx.throw(404, "The expedition you are looking for doesn't exist");
+  ctx.state.expedition = expedition;
+  await next();
+});
+
+router.post('api.members.create', '/:id/members', async (ctx) => {
+  const { expedition } = ctx.state;
+  const member = ctx.orm.member.build({ ...ctx.request.body, expeditionId: expedition.id });
+  try {
+    await member.save({ fields: PERMITTED_MEMBER_FIELDS });
+  } catch (ValidationError) {
+    ctx.throw(422, ValidationError.message);
+  }
+
+  ctx.status = 201;
+  ctx.body = MemberSerializer.serialize(member);
+});
+```
+
+```javascript
+/* src/models/member.js */
+
+member.init({
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true,
+    },
+  },
+  agency: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true,
+    },
+  },
+  nationality: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true,
+    },
+  },
+  bio: {
+    type: DataTypes.TEXT,
+    allowNull: false,
+    validate: {
+      notEmpty: true,
+    },
+  },
+  photo: {
+    type: DataTypes.STRING,
+    validate: {
+      isUrl: true,
+    },
+  },
+  role: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true,
+    },
+  },
+  expeditionId: {
+    type: DataTypes.INTEGER,
+  },
+}, {
+  sequelize,
+  modelName: 'member',
+});
+```
+
 ### Pauta de evaluación
+
+- **[0.15 pts]** Definición de nuevo endpoint con método HTTP `POST` y path `/api/expeditions/:id/members`
+- **[0.15 pts]** Consulta dentro del endpoint para obtener la expedición dada por el parámetro `id`
+- **[0.20 pts]** Creación de nuevo miembro de la expedición, recibiendo los nuevos valores como parte del cuerpo del request, bajo la key correspondiente, y adjuntando el id de la expedición (o bien, creando el miembro desde la expedición con `expedition.createMember`)
+- **[0.05 pts]** Response incluye status code `201`
+- **[0.10 pts]** Response incluye cuerpo que consiste en un objeto con la estructura especificada (es decir, incluye los campos `name`, `agency`, `nationality`, `bio`, `photo`, `role`, en formato JSON API)
+- **[0.15 pts]** Se incluyen las validaciones server-side especificadas
+    - Asignar **0.025 pts** por cada campo requerido: `name`, `agency`, `nationality`, `bio`, `role`.
+    - Asignar **0.025 pts** por cada campo con formato URL: `photo`.
+- **[0.10 pts]** En caso de no existir la expedición, se retorna un error con status code `404` y un mensaje descriptivo (no el default)
+- **[0.10 pts]** En caso de existir algún error de validación, se retorna un error con status code `422` y un pequeño mensaje asociado al error de validación
 
 ### Errores
 
