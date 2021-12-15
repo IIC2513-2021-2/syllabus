@@ -187,7 +187,32 @@ La especificación del endpoint es la siguiente:
 
 ### Solución
 
+```javascript
+const ExpeditionDetailSerializer = new JSONAPISerializer('expeditions', {
+  attributes: ['name', 'startDate', 'endDate', 'patch', 'description'],
+  keyForAttribute: 'camelCase',
+});
+
+router.param('id', async (id, ctx, next) => {
+  const expedition = await ctx.orm.expedition.findByPk(id);
+  if (!expedition) ctx.throw(404, "The expedition you are looking for doesn't exist");
+  ctx.state.expedition = expedition;
+  await next();
+});
+
+router.get('api.candidates.show', '/:id', async (ctx) => {
+  const { expedition } = ctx.state;
+  ctx.body = ExpeditionDetailSerializer.serialize(expedition);
+});
+```
+
 ### Pauta de evaluación
+
+- **[0.15 pts]** Definición de nuevo endpoint con método HTTP `GET` y path `/api/expeditions/:id`
+- **[0.15 pts]** Consulta dentro del endpoint para obtener datos del modelo `expedition`
+- **[0.10 pts]** Construcción del body a partir de un objeto `JSONAPISerializer` para seguir formato JSON API
+- **[0.10 pts]** Inclusión de los 5 campos requeridos por el frontend
+  - Asignar **0.02 pts** por cada campo: `name`, `startDate`, `endDate`, `patch`, `description`.
 
 ## Lista de miembros de una expedición [0.5 pt]
 
