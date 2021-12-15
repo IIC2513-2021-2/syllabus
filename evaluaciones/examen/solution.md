@@ -690,7 +690,62 @@ Sólo basta con solucionar la vulnerabilidad o en `<ExpeditionDetail />` o en `<
 
 ### Solución
 
+Al agregar el script mencionado tanto a la descripción de una expedición como a la bio de un miembro, no se podía visualizar la vulnerabilidad. Si bien el script era agregado al DOM, no era ejecutado por el browser [debido a una medida de seguridad de este](https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML#security_considerations).
+
+Sin embargo, con el siguiente truco es posible visualizar la vulnerabilidad:
+```
+<img src=\"x\" onerror=\"document.body.innerHTML = 'You have been pwned :)';document.body.style = 'background-color:#444;color:white;display:flex;justify-content:center;align-items:center;font-size:48px;height:100vh';\">
+```
+
+(En pocas palabras, se incluye una imagen cuyo `src` va a fallar, lo cual ejecuta el código JavaScript especificado en el atributo `onerror`)
+
+La solución es eliminar el comportamiento dado por `dangerouslySetInnerHTML`, aunque se muestren visualmente las etiquetas HTML como texto.
+
+```jsx
+/* src/views/ExpeditionDetail.jsx */
+
+/* Se remueve la función createMarkup */
+
+return (
+  <>
+    <div className="expedition-main">
+      <section>
+        <h1>{expedition?.name}</h1>
+        <span>Start on {expedition && format(parseISO(expedition.startDate), 'PPP')}</span>
+        <span>{expedition?.endDate ? `End on ${format(parseISO(expedition.endDate), 'PPP')}` : 'Current mission'}</span>
+        <p>{expedition?.description}</p> {/* Fix de seguridad */}
+      </section>
+      <img alt={expedition?.name} src={expedition?.patch} />
+    </div>
+
+    <section className="expedition-secondary">
+      <h2>Members</h2>
+      <Loading />
+    </section>
+  </>
+);
+```
+
+```jsx
+/* src/components/MemberCard.jsx */
+
+/* Se remueve la función createMarkup */
+
+return (
+  <article className="member-card">
+    <h2>{member.name}</h2>
+    <span>
+      <strong>{member.agency}</strong>
+    </span>
+    <p>{member.bio}</p> {/* Fix de seguridad */}
+    <img src={member.photo} alt={member.name} />
+    <span className="role">{member.role}</span>
+  </article>
+);
+```
+
 ### Pauta de evaluación
+- **[0.5 pts]** Modificar la etiqueta `p` que tiene el atributo `dangerouslySetInnerHTML`, eliminando éste y pasándole al párrafo como hijo el contenido correspondiente (`expedition?.description` o `member.bio` dependiendo del caso seleccionado)
 
 # Parte V: Calidad de software [0.5 pt]
 
@@ -699,6 +754,9 @@ Ambas aplicaciones (backend y frontend) cuentan con ESLint instalado y ciertas r
 **IMPORTANTE**: no puede modificar el archivo **.eslintrc** o **.eslintrc.json**, ni tampoco ninguna configuración de ESLint. Tampoco puede deshabilitar reglas en el código (comentarios del tipo `eslint-disable`). Su código debe pasar el filtro del linter respetando la configuración original de cada proyecto.
 
 ### Pauta de evaluación
+
+- **[0.25 pts]** Linter en `examen-backend` ejecuta exitosamente, sin arrojar errores ni warnings
+- **[0.25 pts]** Linter en `examen-frontend` ejecuta exitosamente, sin arrojar errores ni warnings
 
 # Consideraciones generales
 
