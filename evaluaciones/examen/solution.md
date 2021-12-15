@@ -200,7 +200,7 @@ router.param('id', async (id, ctx, next) => {
   await next();
 });
 
-router.get('api.candidates.show', '/:id', async (ctx) => {
+router.get('api.expeditions.show', '/:id', async (ctx) => {
   const { expedition } = ctx.state;
   ctx.body = ExpeditionDetailSerializer.serialize(expedition);
 });
@@ -262,7 +262,7 @@ router.param('id', async (id, ctx, next) => {
   await next();
 });
 
-router.get('api.candidates.members', '/:id/members', async (ctx) => {
+router.get('api.expeditions.members', '/:id/members', async (ctx) => {
   const { expedition } = ctx.state;
   const members = await expedition.getMembers();
   ctx.body = MemberSerializer.serialize(members);
@@ -319,7 +319,85 @@ La especificación del endpoint es la siguiente:
 
 #### Solución
 
+```javascript
+/* src/routes/api/expeditions.js */
+
+const PERMITTED_EXPEDITION_FIELDS = [
+  'name',
+  'startDate',
+  'endDate',
+  'patch',
+  'description',
+];
+
+router.patch('api.expeditions.update', '/:id', async (ctx) => {
+  const { expedition } = ctx.state;
+  try {
+    await expedition.update(ctx.request.body, { fields: PERMITTED_EXPEDITION_FIELDS });
+  } catch (ValidationError) {
+    ctx.throw(422, ValidationError.message);
+  }
+
+  ctx.body = ExpeditionDetailSerializer.serialize(expedition);
+});
+```
+
+```javascript
+/* src/models/expedition.js */
+
+expedition.init({
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true,
+    },
+  },
+  startDate: {
+    type: DataTypes.DATEONLY,
+    allowNull: false,
+    validate: {
+      notEmpty: true,
+      isDate: true,
+    },
+  },
+  endDate: {
+    type: DataTypes.DATEONLY,
+    validate: {
+      isDate: true,
+    },
+  },
+  patch: {
+    type: DataTypes.STRING,
+    validate: {
+      isUrl: true,
+    },
+  },
+  description: {
+    type: DataTypes.TEXT,
+    allowNull: false,
+    validate: {
+      notEmpty: true,
+    },
+  },
+}, {
+  sequelize,
+  modelName: 'expedition',
+});
+```
+
 #### Pauta de evaluación
+
+- **[0.15 pts]** Definición de nuevo endpoint con método HTTP `PATCH` y path `/api/expeditions/:id`
+- **[0.15 pts]** Consulta dentro del endpoint para obtener la expedición dada por el parámetro `id`
+- **[0.20 pts]** Actualización de los datos de la expedición, recibiendo los nuevos valores como parte del cuerpo del request, bajo la key correspondiente
+- **[0.15 pts]** Response incluye cuerpo que consiste en un objeto con la misma estructura que la del detalle de una expedición (es decir, incluye los campos `name`, `startDate`, `endDate`, `patch`, `description`, en formato JSON API)
+- **[0.15 pts]** Se incluyen las validaciones server-side especificadas
+    - Asignar **0.025 pts** por cada campo requerido: `name`, `startDate`, `description`.
+    - Asignar **0.025 pts** por cada campo con formato fecha: `startDate`, `endDate`.
+    - Asignar **0.025 pts** por cada campo con formato URL: `patch`.
+- **[0.10 pts]** En caso de no existir la expedición, se retorna un error con status code `404` y un mensaje descriptivo (no el default)
+- **[0.10 pts]** En caso de existir algún error de validación, se retorna un error con status code `422` y un pequeño mensaje asociado al error de validación
 
 ### Agregar miembro a expedición
 
