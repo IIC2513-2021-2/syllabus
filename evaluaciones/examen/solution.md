@@ -209,7 +209,7 @@ router.get('api.candidates.show', '/:id', async (ctx) => {
 ### Pauta de evaluación
 
 - **[0.15 pts]** Definición de nuevo endpoint con método HTTP `GET` y path `/api/expeditions/:id`
-- **[0.15 pts]** Consulta dentro del endpoint para obtener datos del modelo `expedition`
+- **[0.15 pts]** Consulta dentro del endpoint para obtener la expedición dada por el parámetro `id`
 - **[0.10 pts]** Construcción del body a partir de un objeto `JSONAPISerializer` para seguir formato JSON API
 - **[0.10 pts]** Inclusión de los 5 campos requeridos por el frontend
   - Asignar **0.02 pts** por cada campo: `name`, `startDate`, `endDate`, `patch`, `description`.
@@ -249,7 +249,34 @@ La especificación del endpoint es la siguiente:
 
 ### Solución
 
-### Pauta de evaluación        
+```javascript
+const MemberSerializer = new JSONAPISerializer('members', {
+  attributes: ['name', 'agency', 'nationality', 'bio', 'photo', 'role'],
+  keyForAttribute: 'camelCase',
+});
+
+router.param('id', async (id, ctx, next) => {
+  const expedition = await ctx.orm.expedition.findByPk(id);
+  if (!expedition) ctx.throw(404, "The expedition you are looking for doesn't exist");
+  ctx.state.expedition = expedition;
+  await next();
+});
+
+router.get('api.candidates.members', '/:id/members', async (ctx) => {
+  const { expedition } = ctx.state;
+  const members = await expedition.getMembers();
+  ctx.body = MemberSerializer.serialize(members);
+});
+```
+
+### Pauta de evaluación
+
+- **[0.10 pts]** Definición de nuevo endpoint con método HTTP `GET` y path `/api/expeditions/:id:/members`
+- **[0.10 pts]** Consulta dentro del endpoint para obtener la expedición dada por el parámetro `id`
+- **[0.10 pts]** Consulta dentro del endpoint para obtener el listado de miembros de una expedición específica
+- **[0.08 pts]** Construcción del body a partir de un objeto `JSONAPISerializer` para seguir formato JSON API
+- **[0.12 pts]** Inclusión de los 6 campos en la especificación del endpoint
+  - Asignar **0.02 pts** por cada campo: `name`, `agency`, `nationality`, `bio`, `photo`, `role`.
 
 ## Acción sobre datos [1.0 pt]
 
