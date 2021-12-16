@@ -799,7 +799,137 @@ A continuación podrá encontrar wireframes con el flujo recién descrito.
 
 ### Solución
 
-### Pauta de evaluación
+```jsx
+/* src/views/ExpeditionDetail.jsx */
+
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import format from 'date-fns/format';
+import parseISO from 'date-fns/parseISO';
+import { Deserializer } from 'jsonapi-serializer';
+import MemberCard from '../components/MemberCard';
+import issPhoto from '../assets/iss.jpg'; // Source: https://www.flickr.com/photos/nasa2explore/51712323479
+import api from '../api';
+import config from '../config';
+import Loading from '../components/Loading';
+
+export default function ExpeditionDetail() {
+  const { id } = useParams();
+
+  const [expedition, setExpedition] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [members, setMembers] = useState([]);
+  const [loadingMembers, setLoadingMembers] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    fetch(`${config.API_URL}/api/expeditions/${id}`)
+      .then((response) => {
+        if (!response.ok) {
+          setError(true);
+          return null;
+        }
+        return response.json();
+      })
+      .then((data) => new Deserializer({ keyForAttribute: 'camelCase' }).deserialize(data, (_error, expeditionData) => setExpedition(expeditionData)))
+      .catch(() => setError(true))
+      .finally(() => setLoading(false));
+  }, [id]);
+
+  useEffect(() => {
+    if (expedition) {
+      setLoadingMembers(true);
+      api.getExpeditionMembers(id)
+        .then((data) => (
+          new Deserializer({ keyForAttribute: 'camelCase' })
+            .deserialize(data, (_error, memberList) => setMembers(memberList))
+        ))
+        .catch(() => setError(true))
+        .finally(() => setLoadingMembers(false));
+    }
+  }, [expedition, id]);
+
+  if (loading) {
+    return <Loading />;
+  }
+
+  if (error) {
+    return <p>There was an error loading the expedition data</p>;
+  }
+
+  return (
+    <>
+      <div className="expedition-main">
+        <section>
+          <h1>{expedition?.name}</h1>
+          <span>Start on {expedition && format(parseISO(expedition.startDate), 'PPP')}</span>
+          <span>{expedition?.endDate ? `End on ${format(parseISO(expedition.endDate), 'PPP')}` : 'Current mission'}</span>
+          <p>{expedition?.description}</p> {/* Fix de seguridad */}
+        </section>
+        <img alt={expedition?.name} src={expedition?.patch || issPhoto} />
+      </div>
+
+      <section className="expedition-secondary">
+        <h2>Members</h2>
+        {loadingMembers ? (
+          <div className="loading-container">
+            <Loading />
+          </div>
+        ) : (
+          <div className="members-list">
+            {members.map((member) => (
+              <MemberCard key={member.id} member={member} />
+            ))}
+          </div>
+        )}
+      </section>
+    </>
+  );
+};
+```
+
+```javascript
+/* src/api/index.js */
+
+function getExpeditionMembers(id) {
+  return getResource(`${config.API_URL}/api/expeditions/${id}/members`);
+}
+
+
+const api = {
+  getExpeditions,
+  getExpeditionMembers,
+};
+
+export default api;
+```
+
+```css
+/* src/styles/App.css */
+
+.expedition-secondary .loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 0;
+}
+
+.members-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 80px;
+  padding: 30px 0;
+}
+```
+
+### Pauta de evaluación [0.4 pt]
+
+- **[0.2 pts]** Hacer request al endpoint “Lista de miembros de una expedición” y manejar response en estados de React
+- **[0.1 pts]** Manejar visualización de ícono de loading (mostrarlo mientras se cargan miembros, y no mostrarlo cuando ya se cargaron)
+- **[0.1 pts]** Una vez que la información del endpoint del punto anterior se encuentre disponible, utilizar componente `<MemberCard />` para desplegar cada miembro de la expedición:
+  - Considerar que deben visualizarse 3 miembros por fila, lo que no está directamente relacionado con el uso de `<MemberCard />`. Si no se puede visualizar de esa manera, asignar la mitad del puntaje ([0.05 pts])
+  - Queda a criterio del ayudante corrector asignar puntaje total o parcial de acuerdo a similitud con wireframe
 
 ## Formulario de acción sobre datos
 
