@@ -593,7 +593,192 @@ A continuación podrá encontrar wireframes con el flujo recién descrito.
 
 ### Solución
 
-### Pauta de evaluación
+```jsx
+/* src/views/Expeditions.jsx */
+
+import React, { useEffect, useState } from 'react';
+import { Deserializer } from 'jsonapi-serializer';
+import ExpeditionCard from '../components/ExpeditionCard';
+import Loading from '../components/Loading';
+import api from '../api';
+
+export default function Expeditions() {
+  const [expeditions, setExpeditions] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    api.getExpeditions()
+      .then((data) => (
+        new Deserializer({ keyForAttribute: 'camelCase' })
+          .deserialize(data, (_error, expeditionList) => setExpeditions(expeditionList))
+      ))
+      .catch(() => setError(true))
+      .finally(() => setLoading(false));
+  }, []);
+
+  if (error) {
+    return <p>There was an error loading the expeditions list</p>;
+  }
+
+  return (
+    <div className="expeditions-container">
+      <h1>ISS recent expeditions</h1>
+      {loading ? (
+        <Loading large />
+      ) : (
+        <div className="expeditions-list">
+          {expeditions.map((expedition) => (
+            <ExpeditionCard key={expedition.id} expedition={expedition} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+```javascript
+/* src/api/index.js */
+
+import config from '../config';
+
+async function getResource(url) {
+  const requestOptions = {
+    method: 'GET',
+  };
+  const response = await fetch(url, requestOptions);
+  const result = await response.json();
+  if (!response.ok) {
+    throw new Error(result?.message);
+  }
+  return result;
+}
+
+function getExpeditions() {
+  return getResource(`${config.API_URL}/api/expeditions`);
+}
+
+const api = {
+  getExpeditions,
+}
+
+export default api;
+```
+
+```jsx
+/* src/components/ExpeditionCard.jsx */
+
+import React from 'react';
+import { Link } from 'react-router-dom';
+import format from 'date-fns/format';
+import parseISO from 'date-fns/parseISO';
+import issPhoto from '../assets/iss.jpg'; // Source: https://www.flickr.com/photos/nasa2explore/51712323479
+
+function formatDate(date) {
+  const [month, ...rest] = format(parseISO(date), 'PPP').split(' ');
+  return `${month} ${rest[rest.length - 1]}`;
+}
+
+export default function ExpeditionCard({ expedition }) {
+  return (
+    <article className="expedition-card">
+      <div className="img-container">
+        <img src={expedition.patch || issPhoto} alt={expedition.name} />
+      </div>
+      <div className="expedition-summary">
+        <h2>{expedition.name}</h2>
+        <span>
+          From
+          {' '}
+          {formatDate(expedition.startDate)}
+          {' '}
+          to
+          {' '}
+          {expedition.endDate ? formatDate(expedition.endDate) : 'Today'}
+        </span>
+      </div>
+      <Link className="btn" to={`/expeditions/${expedition.id}`}>More</Link>
+    </article>
+  )
+};
+```
+
+```css
+/* src/styles/App.css */
+
+.loading-lg {
+  font-size: 4rem;
+}
+
+.expeditions-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.expeditions-container h1 {
+  font-size: 2.5rem;
+}
+
+.expeditions-container svg {
+  height: 60vh;
+}
+
+.expeditions-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 80px;
+  padding: 30px 0;
+}
+
+.expedition-card {
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.expedition-card .img-container {
+  max-height: 300px;
+  overflow: hidden;
+}
+
+.expedition-card img {
+  width: 100%;
+}
+
+.expedition-card .expedition-summary {
+  padding: 0 20px;
+}
+
+.expedition-card h2 {
+  font-size: 1.8rem;
+}
+
+.expedition-card span {
+  display: inline-block;
+  font-size: 1.2rem;
+  padding-bottom: 30px;
+}
+
+.expedition-card .btn {
+  border-radius: 0;
+  padding: 20px 0;
+  font-size: 1.2rem;
+  text-align: center;
+}
+```
+
+### Pauta de evaluación [0.6 pt]
+
+- **[0.1 pts]** Inicialmente mostrar título "ISS recent expeditions" y un ícono de loading grande
+- **[0.2 pts]** Hacer request al endpoint “Lista de expediciones” y manejar response en estados de React
+- **[0.2 pts]** Una vez que la información de la lista de expediciones se encuentre disponible, desplegar cada expedición dentro de este componente, incluyendo el nombre, fecha de inicio, fecha de fin y foto del parche de cada una. Si no existe foto del parche, mostrar una predeterminada a elección
+  - Si no incluye foto predeterminada, descontar [0.05 pts]
+  - Queda a criterio del ayudante corrector asignar puntaje total o parcial de acuerdo a similitud con wireframe
+- **[0.1 pts]** Incluir un botón con el texto "More" para cada expedición, que al presionarlo lleve a la ruta `/expeditions/:id` utilizando el componente `<Link />` de `react-router-dom`
+  - Queda a criterio del ayudante corrector asignar puntaje total o parcial de acuerdo a similitud con wireframe
 
 ## Miembros de una expedición
 
