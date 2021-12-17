@@ -1064,7 +1064,7 @@ export default function EditExpedition() {
 
                 <div className="field">
                   <label htmlFor="patch">Patch</label>
-                  <Field name="patch" type="text" placeholder="Patch" />
+                  <Field name="patch" type="text" placeholder="Patch URL" />
                 </div>
 
                 <div className="field">
@@ -1218,7 +1218,214 @@ A continuación podrá encontrar un wireframe con parte del flujo recién descri
 
 #### Solución
 
-#### Pauta de evaluación
+```jsx
+/* src/views/NewMember.jsx */
+
+import React, { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Formik, Form, Field } from 'formik';
+import api from '../api';
+import Loading from '../components/Loading';
+
+const INITIAL_VALUES = {
+  name: '',
+  agency: '',
+  nationality: '',
+  bio: '',
+  photo: '',
+  role: '',
+};
+
+const NULLABLE_FIELDS = [
+  'photo',
+];
+
+function processSubmitValues(values) {
+  return Object.keys(values)
+    .reduce((acc, key) => ({
+      ...acc,
+      [key]: NULLABLE_FIELDS.includes(key) && values[key] === '' ? null : values[key],
+    }), {});
+}
+
+export default function NewMember() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [submitError, setSubmitError] = useState(null);
+
+  const handleSubmit = async (values) => {
+    try {
+      await api.addMemberToExpedition(id, processSubmitValues(values));
+      navigate(`/expeditions/${id}`);
+    } catch (error) {
+      setSubmitError(error.message);
+    }
+  };
+
+  return (
+    <div className="form-container">
+      <h1>Add member to expedition</h1>
+      <Formik
+        initialValues={INITIAL_VALUES}
+        onSubmit={handleSubmit}
+      >
+        {({ isSubmitting }) => (
+          <Form>
+            {submitError && (
+              <div className="error">{submitError}</div>
+            )}
+
+            <div className="field">
+              <label htmlFor="name">Name</label>
+              <Field name="name" type="text" placeholder="Name" />
+            </div>
+
+            <div className="field">
+              <label htmlFor="agency">Agency</label>
+              <Field name="agency" type="text" placeholder="Agency" />
+            </div>
+
+            <div className="field">
+              <label htmlFor="nationality">Nationality</label>
+              <Field name="nationality" type="text" placeholder="Nationality" />
+            </div>
+
+            <div className="field">
+              <label htmlFor="role">Role</label>
+              <Field name="role" type="text" placeholder="Role" />
+            </div>
+
+            <div className="field">
+              <label htmlFor="photo">Photo</label>
+              <Field name="photo" type="text" placeholder="Photo URL" />
+            </div>
+
+            <div className="field">
+              <label htmlFor="bio">Bio</label>
+              <Field name="bio" as="textarea" placeholder="Bio" />
+            </div>
+
+            <div className="field">
+              <button
+                className="btn"
+                disabled={isSubmitting}
+                type="submit"
+              >
+                {isSubmitting && <Loading />}
+                {' '}
+                Add member
+              </button>
+            </div>
+          </Form>
+        )}
+      </Formik>
+    </div>
+  );
+}
+```
+
+```javascript
+/* src/api/index.js */
+
+async function alterResource(url, payload, options) {
+  const { method, ...otherOptions } = options;
+  const requestOptions = {
+    method,
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+    ...otherOptions,
+  };
+  const response = await fetch(url, requestOptions);
+  const result = await response.json();
+  if (!response.ok) {
+    throw new Error(result?.message);
+  }
+  return result;
+}
+
+function addMemberToExpedition(id, payload) {
+  return alterResource(`${config.API_URL}/api/expeditions/${id}/members`, payload, { method: 'POST' });
+}
+
+
+const api = {
+  addMemberToExpedition,
+  getExpeditions,
+  getExpeditionDetail,
+  getExpeditionMembers,
+  updateExpedition,
+};
+
+export default api;
+```
+
+```css
+/* src/styles/App.css */
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 40%;
+  margin: 0 auto;
+}
+
+.form-container .loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+}
+
+.form-container form {
+  width: 100%;
+}
+
+.form-container .field {
+  display: flex;
+  flex-direction: column;
+  padding: 15px 0;
+}
+
+.form-container form input, .form-container form textarea {
+  padding: 5px;
+  margin-top: 10px;
+  font-size: 1rem;
+}
+
+.form-container form textarea {
+  font-family: inherit;
+  height: 150px;
+}
+
+.form-container form button {
+  width: 40%;
+  align-self: center;
+}
+
+.form-container form button:disabled {
+  cursor: not-allowed;
+  background-color: #777;
+  color: #CCC;
+}
+
+.form-container form button .loading {
+  font-size: 1rem;
+}
+
+.form-container .error {
+  padding: 15px;
+}
+```
+
+#### Pauta de evaluación [1.0 pt]
+
+- **[0.25 pts]** El formulario incluye los campos `name`, `agency`, `nationality`, `bio`, `photo` y `role`, con su tipo correspondiente
+  - Queda a criterio del ayudante corrector asignar puntaje total o parcial de acuerdo a similitud con wireframe
+- **[0.15 pts]** Al hacer submit del formulario se muestra el botón de submit con un mensaje o ícono de loading pequeño, y además se deshabilita mientras ocurre la acción del submit
+- **[0.25 pts]** Al hacer submit del formulario, se consume el endpoint "Agregar miembro a expedición", adjuntando los datos del formulario
+- **[0.20 pts]** En caso de existir error de validación, se muestra un mensaje único sobre el formulario con el mensaje de error proveniente de la API
+- **[0.15 pts]** En caso de ser exitosa la operación, se realiza una redirección a la vista de detalle de la expedición
 
 # Parte IV: Seguridad web [0.5 pt]
 
