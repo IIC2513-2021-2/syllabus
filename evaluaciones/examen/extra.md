@@ -72,7 +72,7 @@ Esta primera parte es la única que no tiene relación con el contexto de la apl
 
 ## Implementación
 
-Para esta primera parte utilizará el proyecto `**examen-extra-frontend**`. Debe asegurarse de clonarlo y ejecutarlo como indican las instrucciones del repositorio.
+Para esta primera parte utilizará el proyecto **`examen-extra-frontend`**. Debe asegurarse de clonarlo y ejecutarlo como indican las instrucciones del repositorio.
 
 El detalle de las preguntas teóricas lo encontrará también ingresando a la ruta `/theory-extra` de la SPA. Esta ruta está implementada como un componente estático dentro del archivo `src/views/TheoryExtra.jsx`. Dentro del render del componente encontrará una etiqueta `<p></p>` vacía bajo cada pregunta. **Usted debe utilizar estas etiquetas para ingresar sus respuestas**. Para visualizar su implementación, puede refrescar la ruta `/theory-extra` las veces que desee.
 
@@ -228,6 +228,10 @@ Actualmente la vista de login de usuario (en la ruta `/login` implementada en el
 
 A continuación podrá encontrar un wireframe con parte del flujo recién descrito.
 
+![Wireframes Examen-Login](https://user-images.githubusercontent.com/421739/157403418-cf359e6f-64e6-439e-801c-a42ebc7a3ae5.jpg)
+
+![Wireframes Examen-CompaniesList (2)](https://user-images.githubusercontent.com/421739/157403635-5fd527d3-b219-4c4b-a0bf-4cf74d758dca.jpg)
+
 ## Acciones CRUD expedición [0.5 pts]
 
 En este punto usted debe implementar uno de los 2 CRUDs asociados a la decisión de implementación de API que tomó anteriormente. Es decir, implementar uno de los siguientes dos casos:
@@ -252,6 +256,10 @@ Actualmente la vista de una nueva expedición (en la ruta `/expeditions/new` imp
 
 A continuación podrá encontrar un wireframe con parte del flujo recién descrito.
 
+![Wireframes Examen-CompanyDetail (4)](https://user-images.githubusercontent.com/421739/157403745-69c83a72-3e21-4776-927b-93daafe433e1.jpg)
+
+![Wireframes Examen-CompanyDetail (5)](https://user-images.githubusercontent.com/421739/157403837-70eeaff5-31fa-4ad2-b9d5-11f4c46033e8.jpg)
+
 ### Eliminar expedición
 
 Para este caso, su tarea será implementar un botón que permita eliminar una expedición en particular. Debe considerar las siguientes indicaciones:
@@ -264,6 +272,8 @@ Para este caso, su tarea será implementar un botón que permita eliminar una ex
 - Si la operación es exitosa, debe redireccionar a la vista “Lista de expediciones”
 
 A continuación podrá encontrar un wireframe con parte del flujo recién descrito.
+
+![Wireframes Examen-CompanyDetail (6)](https://user-images.githubusercontent.com/421739/157404024-acc94c16-dfc3-4175-b9c8-40d32bef0335.jpg)
 
 ## Rutas protegidas [0.5 pts]
 
